@@ -1,23 +1,13 @@
 import "react-toastify/dist/ReactToastify.css";
-import { Product } from "./_types/Product";
-import { Header } from "./components/_layouts/Header";
+import { Header } from "./components/_layout/Header";
 import { Hero } from "./components/home/Hero";
 import { ProductSection } from "./components/home/ProductSection";
 import { ToastContainer } from "react-toastify";
-
-const DUMMY_PRODUCTS: Product[] = [
-  {
-    image: "coffes/tradicional.png",
-    category: "Tradicional",
-    name: "Expresso Tradicional",
-    description: "O tradicional café feito com água quente e grãos moídos",
-    price: 9.9,
-  },
-];
+import { DUMMY_PRODUCTS } from "./api/DummyProducts";
 
 function App() {
   return (
-    <div className="mx-auto max-w-[1100px]">
+    <div className="mx-auto max-w-[1100px] px-4">
       <ToastContainer />
       <Header />
       <Hero />

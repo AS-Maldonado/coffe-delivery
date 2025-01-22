@@ -11,11 +11,11 @@ export function ProductSection({
   productList,
 }: ProductSectionProps) {
   return (
-    <section className="my-6">
-      <h2 className="text-subtitle font-baloo mb-14 text-3xl font-extrabold">
+    <section className="my-6 flex flex-col items-center xl:items-start">
+      <h2 className="mb-14 font-baloo text-3xl font-extrabold text-subtitle">
         {sectionTitle}
       </h2>
-      <div>
+      <div className="flex flex-wrap justify-center gap-x-3 gap-y-12 xl:justify-start">
         {productList.map((item, i) => (
           <ProductCard product={item} key={i} />
         ))}

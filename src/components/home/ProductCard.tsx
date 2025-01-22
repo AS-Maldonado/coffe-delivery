@@ -15,7 +15,7 @@ export function ProductCard({ product }: ProductCardProps) {
       setQuantity((prevQuantity) => prevQuantity + 1);
     } else {
       if (quantity === 1) {
-        toast.error("Quantidade não pode ser menor do que 1!");
+        toast.error("Não é possível comprar menos de 01 Café!");
         return;
       }
 
@@ -24,30 +24,30 @@ export function ProductCard({ product }: ProductCardProps) {
   }
 
   return (
-    <div className="bg-card flex w-[256px] flex-col items-center rounded-bl-[36px] rounded-tr-[36px] text-center">
+    <div className="flex w-[256px] flex-col items-center rounded-bl-[36px] rounded-tr-[36px] bg-card text-center">
       <img
         src={product.image}
         alt={`${product.name} Ilustration`}
         className="relative bottom-[25px]"
       />
-      <span className="bg-yellow_light text-yellow_dark rounded-full px-2 py-1 text-[0.7rem] font-bold uppercase">
+      <span className="rounded-full bg-yellow_light px-2 py-1 text-[0.7rem] font-bold uppercase text-yellow_dark">
         {product.category}
       </span>
-      <h3 className="font-baloo text-subtitle mb-1 mt-4 text-xl font-extrabold">
+      <h3 className="mb-1 mt-4 font-baloo text-xl font-extrabold text-subtitle">
         {product.name}
       </h3>
-      <p className="text-label px-2 text-sm">{product.description}</p>
+      <p className="px-2 text-sm text-label">{product.description}</p>
       <div className="mb-3 mt-6 flex">
-        <p className="text-text mr-3 text-sm font-bold">
+        <p className="mr-3 text-sm font-bold text-text">
           R${" "}
           <span className="text-2xl font-extrabold">
             {product.price.toFixed(2)}
           </span>
         </p>
         <div className="flex items-center gap-2">
-          <div className="bg-button flex min-w-16 items-center justify-between rounded-md">
+          <div className="flex min-w-16 items-center justify-between rounded-md bg-button">
             <button
-              className="text-purple hover:bg-purple hover:text-button rounded-bl-md rounded-tl-md p-2 text-sm font-extrabold"
+              className="rounded-bl-md rounded-tl-md p-2 text-sm font-extrabold text-purple hover:bg-purple hover:text-button"
               onClick={() => changeQuantity("sub")}
             >
               -
@@ -56,13 +56,13 @@ export function ProductCard({ product }: ProductCardProps) {
               {quantity}
             </p>
             <button
-              className="text-purple hover:bg-purple hover:text-button rounded-br-md rounded-tr-md p-2 text-sm font-extrabold"
+              className="rounded-br-md rounded-tr-md p-2 text-sm font-extrabold text-purple hover:bg-purple hover:text-button"
               onClick={() => changeQuantity("add")}
             >
               +
             </button>
           </div>
-          <button className="bg-purple_dark hover:bg-purple rounded-md p-2 text-white">
+          <button className="rounded-md bg-purple_dark p-2 text-white hover:bg-purple">
             <ShoppingCart />
           </button>
         </div>
