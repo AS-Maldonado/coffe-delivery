@@ -1,13 +1,16 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Product } from "../../_types/Product";
 import { ShoppingCart } from "lucide-react";
 import { toast } from "react-toastify";
+import { CartContext } from "../../contexts/CartContext";
 
 interface ProductCardProps {
   product: Product;
 }
 
 export function ProductCard({ product }: ProductCardProps) {
+  const { addToCart } = useContext(CartContext);
+
   const [quantity, setQuantity] = useState(1);
 
   function changeQuantity(operationType: string) {
@@ -21,6 +24,11 @@ export function ProductCard({ product }: ProductCardProps) {
 
       setQuantity((prevQuantity) => prevQuantity - 1);
     }
+  }
+
+  function handleAddToCart() {
+    addToCart({ product, quantity });
+    setQuantity(1);
   }
 
   return (
@@ -62,7 +70,10 @@ export function ProductCard({ product }: ProductCardProps) {
               +
             </button>
           </div>
-          <button className="rounded-md bg-purple_dark p-2 text-white hover:bg-purple">
+          <button
+            className="rounded-md bg-purple_dark p-2 text-white hover:bg-purple"
+            onClick={handleAddToCart}
+          >
             <ShoppingCart />
           </button>
         </div>
