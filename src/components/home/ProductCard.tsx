@@ -1,34 +1,31 @@
 import { useContext, useState } from "react";
-import { Product } from "../../_types/Product";
 import { ShoppingCart } from "lucide-react";
-import { toast } from "react-toastify";
 import { CartContext } from "../../contexts/CartContext";
+import { CartItem } from "../../_types/CartItem";
+import { toast } from "react-toastify";
 
 interface ProductCardProps {
-  product: Product;
+  cartItem: CartItem;
 }
 
-export function ProductCard({ product }: ProductCardProps) {
-  const { addToCart } = useContext(CartContext);
+export function ProductCard({ cartItem }: ProductCardProps) {
+  const { addToCart, changeQuantity } = useContext(CartContext);
+  const [quantity, setQuantity] = useState<number>(1);
+  const { product } = cartItem;
 
-  const [quantity, setQuantity] = useState(1);
-
-  function changeQuantity(operationType: string) {
+  function handleChangeQuantity(operationType: string, productName: string) {
     if (operationType === "add") {
-      setQuantity((prevQuantity) => prevQuantity + 1);
-    } else {
+      setQuantity((prev) => prev + 1);
+      changeQuantity(operationType, productName);
+    } else if (operationType === "sub") {
       if (quantity === 1) {
         toast.error("Não é possível comprar menos de 01 Café!");
         return;
       }
 
-      setQuantity((prevQuantity) => prevQuantity - 1);
+      setQuantity((prev) => prev - 1);
+      changeQuantity(operationType, productName);
     }
-  }
-
-  function handleAddToCart() {
-    addToCart({ product, quantity });
-    setQuantity(1);
   }
 
   return (
@@ -56,7 +53,7 @@ export function ProductCard({ product }: ProductCardProps) {
           <div className="flex min-w-16 items-center justify-between rounded-md bg-button">
             <button
               className="rounded-bl-md rounded-tl-md p-2 text-sm font-extrabold text-purple hover:bg-purple hover:text-button"
-              onClick={() => changeQuantity("sub")}
+              onClick={() => handleChangeQuantity("sub", cartItem.product.name)}
             >
               -
             </button>
@@ -65,14 +62,14 @@ export function ProductCard({ product }: ProductCardProps) {
             </p>
             <button
               className="rounded-br-md rounded-tr-md p-2 text-sm font-extrabold text-purple hover:bg-purple hover:text-button"
-              onClick={() => changeQuantity("add")}
+              onClick={() => handleChangeQuantity("add", cartItem.product.name)}
             >
               +
             </button>
           </div>
           <button
             className="rounded-md bg-purple_dark p-2 text-white hover:bg-purple"
-            onClick={handleAddToCart}
+            onClick={() => addToCart({ product, quantity })}
           >
             <ShoppingCart />
           </button>

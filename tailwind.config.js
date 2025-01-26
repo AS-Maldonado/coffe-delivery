@@ -16,6 +16,7 @@ export default {
         text: "#574F4D",
         card: "#F3F2F2",
         button: "#E6E5E5",
+        input: "#EDEDED",
       },
       fontFamily: {
         baloo: ["'Baloo 2'", "'serif'"],

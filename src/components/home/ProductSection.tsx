@@ -1,9 +1,9 @@
-import { Product } from "../../_types/Product";
+import { CartItem } from "../../_types/CartItem";
 import { ProductCard } from "./ProductCard";
 
 interface ProductSectionProps {
   sectionTitle: string;
-  productList: Product[];
+  productList: CartItem[];
 }
 
 export function ProductSection({
@@ -17,7 +17,7 @@ export function ProductSection({
       </h2>
       <div className="flex flex-wrap justify-center gap-x-3 gap-y-12 xl:justify-start">
         {productList.map((item, i) => (
-          <ProductCard product={item} key={i} />
+          <ProductCard cartItem={item} key={i} />
         ))}
       </div>
     </section>
