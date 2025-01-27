@@ -1,4 +1,5 @@
 import { InputHTMLAttributes, ReactNode } from "react";
+import { useFormContext } from "react-hook-form";
 
 export interface CheckoutInputProps
   extends InputHTMLAttributes<HTMLInputElement> {
@@ -15,17 +16,27 @@ export function CheckoutInput({
   type,
   name,
   placeholder,
-  required,
   inputClassName,
 }: CheckoutInputProps) {
+  const {
+    register,
+    formState: { errors },
+  } = useFormContext();
+
+  if (!name) {
+    throw new Error("O atributo 'name' é obrigatório em CheckoutInput.");
+  }
+
   return (
-    <input
-      type={type}
-      name={name}
-      placeholder={placeholder}
-      required={required}
-      className={`bg-input rounded-md border border-button p-3 text-label ${inputClassName}`}
-    />
+    <>
+      <input
+        type={type}
+        placeholder={placeholder}
+        {...register(name)}
+        className={`rounded-md border border-button bg-input p-3 text-label ${inputClassName}`}
+      />
+      {errors[name] && <p>{errors[name]?.message as string}</p>}
+    </>
   );
 }
 
@@ -36,6 +47,7 @@ export function CheckoutPaymentButton({
 }: CheckoutPaymentButtonProps) {
   return (
     <button
+      type="button"
       onClick={handleOnClick}
       className="group flex items-center gap-2 whitespace-nowrap rounded-md bg-button p-4 text-xs uppercase text-text hover:bg-purple hover:text-white"
     >

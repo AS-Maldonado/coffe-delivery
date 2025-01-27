@@ -33,10 +33,10 @@ export function CheckoutCard({
           inputs &&
           inputs.map((input) => (
             <CheckoutInput
+              key={input.name}
               type={input.type}
               name={input.name}
               placeholder={input.placeholder}
-              required={input.required}
               inputClassName={input.inputClassName}
             />
           ))

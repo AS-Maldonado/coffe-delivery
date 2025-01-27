@@ -1,10 +1,16 @@
 import { useContext, useEffect, useState } from "react";
 import { CartContext } from "../../contexts/CartContext";
 import { CheckoutProductExibition } from "./CheckoutProductExibition";
+import { useFormContext } from "react-hook-form";
 
 export function CheckoutProductCard() {
   const { cart, changeQuantity } = useContext(CartContext);
   const [allProductsPrice, setAllProductsPrice] = useState<number>(0);
+
+  const { setValue } = useFormContext();
+  const totalPrice = allProductsPrice
+    ? (allProductsPrice + 3.5).toFixed(2)
+    : (0.0).toFixed(2);
 
   useEffect(() => {
     const cartItensPrice = cart.map(
@@ -16,8 +22,14 @@ export function CheckoutProductCard() {
       0,
     );
 
+    setValue("itens", cart);
     setAllProductsPrice(priceOfAllItens);
-  }, [cart]);
+    setValue("precoItens", priceOfAllItens);
+  }, [cart, setValue]);
+
+  useEffect(() => {
+    setValue("precoTotal", totalPrice);
+  }, [totalPrice, setValue]);
 
   return (
     <div className="my-3 rounded-bl-[36px] rounded-tr-[36px] bg-card p-10">
@@ -43,12 +55,7 @@ export function CheckoutProductCard() {
         </div>
         <div className="flex items-center justify-between">
           <h3 className="text-lg font-bold text-subtitle">Total:</h3>
-          <p className="text-lg font-bold text-subtitle">
-            R${" "}
-            {allProductsPrice
-              ? (allProductsPrice + 3.5).toFixed(2)
-              : (0.0).toFixed(2)}
-          </p>
+          <p className="text-lg font-bold text-subtitle">R$ {totalPrice}</p>
         </div>
       </div>
       <button
