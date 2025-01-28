@@ -13,7 +13,7 @@ export function CheckoutPaymentSelection() {
 
   return (
     <>
-      <input type="hidden" value={paymentValue} {...register("payment")} />
+      <input type="hidden" value={paymentValue} {...register("pagamento")} />
       <CheckoutPaymentButton
         name="Cartão de Crédito"
         handleOnClick={() => setPaymentValue("credito")}

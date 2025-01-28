@@ -8,9 +8,7 @@ export function CheckoutProductCard() {
   const [allProductsPrice, setAllProductsPrice] = useState<number>(0);
 
   const { setValue } = useFormContext();
-  const totalPrice = allProductsPrice
-    ? (allProductsPrice + 3.5).toFixed(2)
-    : (0.0).toFixed(2);
+  const totalPrice = allProductsPrice ? allProductsPrice + 3.5 : 0.0;
 
   useEffect(() => {
     const cartItensPrice = cart.map(
@@ -24,11 +22,11 @@ export function CheckoutProductCard() {
 
     setValue("itens", cart);
     setAllProductsPrice(priceOfAllItens);
-    setValue("precoItens", priceOfAllItens);
+    setValue("precoItens", priceOfAllItens.toFixed(2));
   }, [cart, setValue]);
 
   useEffect(() => {
-    setValue("precoTotal", totalPrice);
+    setValue("precoTotal", totalPrice.toFixed(2));
   }, [totalPrice, setValue]);
 
   return (
@@ -55,7 +53,9 @@ export function CheckoutProductCard() {
         </div>
         <div className="flex items-center justify-between">
           <h3 className="text-lg font-bold text-subtitle">Total:</h3>
-          <p className="text-lg font-bold text-subtitle">R$ {totalPrice}</p>
+          <p className="text-lg font-bold text-subtitle">
+            R$ {totalPrice.toFixed(2)}
+          </p>
         </div>
       </div>
       <button

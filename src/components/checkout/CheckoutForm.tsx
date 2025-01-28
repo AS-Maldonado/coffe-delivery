@@ -5,31 +5,42 @@ import { CheckoutProductCard } from "./CheckoutProductCard";
 import { z } from "zod";
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { toast } from "react-toastify";
 
 export function CheckoutForm() {
   const cartItenmSchema = z.object({
-    produto: z.object({
+    product: z.object({
       image: z.string(),
       category: z.string().optional(),
       name: z.string(),
       description: z.string().optional(),
       price: z.number(),
     }),
-    quantidade: z.number(),
+    quantity: z.number(),
   });
 
   const checkoutFormSchema = z.object({
-    cep: z.string().min(8).max(8),
-    rua: z.string(),
-    numero: z.string(),
+    cep: z.string().min(8).max(8).nonempty("O CEP precisa ser preenchido."),
+    rua: z.string().nonempty("A rua precisa ser preenchida."),
+    numero: z.string().nonempty("O numero precisa ser preenchido."),
     complemento: z.string().optional(),
-    bairro: z.string(),
-    cidade: z.string(),
-    uf: z.string().min(2).max(2),
-    pagamento: z.string(),
-    precoItens: z.number(),
-    precoTotal: z.number(),
-    itens: z.array(cartItenmSchema),
+    bairro: z.string().nonempty("O bairro precisa ser preenchido."),
+    cidade: z.string().nonempty("A cidade precisa ser preenchida."),
+    uf: z
+      .string()
+      .min(2)
+      .max(2)
+      .nonempty("O código UF precisa ser preenchido."),
+    pagamento: z.string().nonempty("Escolha uma forma de pagamento."),
+    precoItens: z
+      .number()
+      .min(1, "É necessário ter pelo menos um item no carrinho."),
+    precoTotal: z
+      .number()
+      .min(1, "É necessário ter pelo menos um item no carrinho."),
+    itens: z
+      .array(cartItenmSchema)
+      .nonempty("Deve haver pelo menos um item no carrinho."),
   });
 
   type CheckoutFormData = z.infer<typeof checkoutFormSchema>;
@@ -40,9 +51,8 @@ export function CheckoutForm() {
 
   const submit = (data: CheckoutFormData) => {
     console.log("Dados enviados: ", data);
+    toast.success("Pedido realizado com sucesso!");
   };
-
-  console.log("Erros do formulário: ", methods.formState.errors);
 
   return (
     <FormProvider {...methods}>

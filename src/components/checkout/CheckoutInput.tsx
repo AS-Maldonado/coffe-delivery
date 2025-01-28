@@ -35,7 +35,11 @@ export function CheckoutInput({
         {...register(name)}
         className={`rounded-md border border-button bg-input p-3 text-label ${inputClassName}`}
       />
-      {errors[name] && <p>{errors[name]?.message as string}</p>}
+      {errors[name] && (
+        <p className="text-xs text-red-600">
+          * {errors[name]?.message as string}
+        </p>
+      )}
     </>
   );
 }
