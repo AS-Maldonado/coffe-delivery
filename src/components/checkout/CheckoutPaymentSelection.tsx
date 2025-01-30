@@ -5,34 +5,49 @@ import { useFormContext } from "react-hook-form";
 
 export function CheckoutPaymentSelection() {
   const [paymentValue, setPaymentValue] = useState<string>("");
+  const [buttonActive, setButtonActive] = useState<string>("");
 
   const {
     register,
     formState: { errors },
   } = useFormContext();
 
+  function handleOnClick(buttonName: string) {
+    setButtonActive(buttonName);
+    setPaymentValue(buttonName);
+  }
+
+  console.log(errors);
+  console.log(paymentValue);
   return (
     <>
       <input type="hidden" value={paymentValue} {...register("pagamento")} />
       <CheckoutPaymentButton
         name="Cartão de Crédito"
-        handleOnClick={() => setPaymentValue("credito")}
+        active={buttonActive === "credito"}
+        handleOnClick={() => handleOnClick("credito")}
       >
         <CreditCard size={20} />
       </CheckoutPaymentButton>
       <CheckoutPaymentButton
         name="Cartão de Débito"
-        handleOnClick={() => setPaymentValue("debito")}
+        active={buttonActive === "debito"}
+        handleOnClick={() => handleOnClick("debito")}
       >
         <Receipt size={20} />
       </CheckoutPaymentButton>
       <CheckoutPaymentButton
         name="Dinheiro"
-        handleOnClick={() => setPaymentValue("dinheiro")}
+        active={buttonActive === "dinheiro"}
+        handleOnClick={() => handleOnClick("dinheiro")}
       >
         <CircleDollarSign size={20} />
       </CheckoutPaymentButton>
-      {errors["payment"] && <p>{errors["payment"]?.message as string}</p>}
+      {errors["pagamento"] && (
+        <p className="col-span-3 pt-2 text-xs text-red-600">
+          * {errors["pagamento"]?.message as string}
+        </p>
+      )}
     </>
   );
 }

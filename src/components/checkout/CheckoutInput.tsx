@@ -3,12 +3,13 @@ import { useFormContext } from "react-hook-form";
 
 export interface CheckoutInputProps
   extends InputHTMLAttributes<HTMLInputElement> {
-  inputClassName?: string;
+  divClassName?: string;
 }
 
 interface CheckoutPaymentButtonProps {
   children: ReactNode;
   name: string;
+  active: boolean;
   handleOnClick: () => void;
 }
 
@@ -16,7 +17,7 @@ export function CheckoutInput({
   type,
   name,
   placeholder,
-  inputClassName,
+  divClassName,
 }: CheckoutInputProps) {
   const {
     register,
@@ -28,34 +29,39 @@ export function CheckoutInput({
   }
 
   return (
-    <>
+    <div className={divClassName ?? "col-span-3"}>
       <input
         type={type}
         placeholder={placeholder}
         {...register(name)}
-        className={`rounded-md border border-button bg-input p-3 text-label ${inputClassName}`}
+        className="w-full rounded-md border border-button bg-input p-3 text-label"
       />
       {errors[name] && (
-        <p className="text-xs text-red-600">
+        <p className="pt-2 text-xs text-red-600">
           * {errors[name]?.message as string}
         </p>
       )}
-    </>
+    </div>
   );
 }
 
 export function CheckoutPaymentButton({
   children,
   name,
+  active,
   handleOnClick,
 }: CheckoutPaymentButtonProps) {
   return (
     <button
       type="button"
       onClick={handleOnClick}
-      className="group flex items-center gap-2 whitespace-nowrap rounded-md bg-button p-4 text-xs uppercase text-text hover:bg-purple hover:text-white"
+      className={`group flex items-center gap-2 whitespace-nowrap rounded-md p-4 text-xs uppercase hover:bg-purple hover:text-white ${active ? "bg-purple text-white" : "bg-button text-text"}`}
     >
-      <span className="text-purple group-hover:text-white">{children}</span>
+      <span
+        className={`group-hover:text-white ${active ? "text-white" : "text-purple"}`}
+      >
+        {children}
+      </span>
       {name}
     </button>
   );

@@ -22,11 +22,11 @@ export function CheckoutProductCard() {
 
     setValue("itens", cart);
     setAllProductsPrice(priceOfAllItens);
-    setValue("precoItens", priceOfAllItens.toFixed(2));
+    setValue("precoItens", priceOfAllItens);
   }, [cart, setValue]);
 
   useEffect(() => {
-    setValue("precoTotal", totalPrice.toFixed(2));
+    setValue("precoTotal", totalPrice);
   }, [totalPrice, setValue]);
 
   return (

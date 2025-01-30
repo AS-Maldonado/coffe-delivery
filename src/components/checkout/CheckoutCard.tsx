@@ -37,7 +37,7 @@ export function CheckoutCard({
               type={input.type}
               name={input.name}
               placeholder={input.placeholder}
-              inputClassName={input.inputClassName}
+              divClassName={input.divClassName}
             />
           ))
         )}
