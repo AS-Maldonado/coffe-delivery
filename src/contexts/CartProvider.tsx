@@ -24,7 +24,7 @@ export function CartContextProvider({ children }: CartContextProps) {
       setCart((prev) => [...prev, { product, quantity }]);
     }
 
-    toast.success("Produto adicionado ao carrinho!");
+    toast.success("Produto adicionado ao carrinho!", { autoClose: 1500 });
   }
 
   function changeQuantity(operationType: string, productName: string) {
@@ -46,8 +46,16 @@ export function CartContextProvider({ children }: CartContextProps) {
     );
   }
 
+  function removeProductFromCart(productName: string) {
+    setCart((prevCart) => {
+      return prevCart.filter((item) => item.product.name !== productName);
+    });
+  }
+
   return (
-    <CartContext.Provider value={{ cart, addToCart, changeQuantity }}>
+    <CartContext.Provider
+      value={{ cart, addToCart, changeQuantity, removeProductFromCart }}
+    >
       {children}
     </CartContext.Provider>
   );

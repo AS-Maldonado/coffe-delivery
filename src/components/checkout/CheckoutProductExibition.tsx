@@ -3,11 +3,13 @@ import { CartItem } from "../../_types/CartItem";
 
 interface CheckoutProcutExibitionProps {
   cartItem: CartItem;
+  removeProductFromCart: (productName: string) => void;
   changeQuantity: (operationType: string, productName: string) => void;
 }
 
 export function CheckoutProductExibition({
   cartItem,
+  removeProductFromCart,
   changeQuantity,
 }: CheckoutProcutExibitionProps) {
   return (
@@ -42,6 +44,7 @@ export function CheckoutProductExibition({
             </div>
             <button
               type="button"
+              onClick={() => removeProductFromCart(cartItem.product.name)}
               className="group flex items-center justify-between gap-1 rounded-md bg-button px-2 py-1 text-xs uppercase text-text hover:bg-purple hover:text-white"
             >
               <Trash2

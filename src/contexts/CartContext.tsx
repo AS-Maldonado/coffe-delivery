@@ -5,6 +5,7 @@ interface CartContext {
   cart: CartItem[];
   addToCart: (cartItem: CartItem) => void;
   changeQuantity: (operationType: string, productName: string) => void;
+  removeProductFromCart: (productName: string) => void;
 }
 
 export const CartContext = createContext({} as CartContext);

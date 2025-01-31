@@ -6,6 +6,7 @@ import { z } from "zod";
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "react-toastify";
+import { useEffect } from "react";
 
 export function CheckoutForm() {
   const cartItenmSchema = z.object({
@@ -48,6 +49,16 @@ export function CheckoutForm() {
   const methods = useForm<CheckoutFormData>({
     resolver: zodResolver(checkoutFormSchema),
   });
+
+  const errors = methods.formState.errors;
+
+  useEffect(() => {
+    if (Object.keys(errors).length !== 0) {
+      toast.error(
+        "Houve um erro ao efetuar o pedido... Por favor, verifique se não faltou algo.",
+      );
+    }
+  }, [errors]);
 
   const submit = (data: CheckoutFormData) => {
     console.log("Dados enviados: ", data);

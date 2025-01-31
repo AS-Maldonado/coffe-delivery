@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CircleDollarSign, CreditCard, Receipt } from "lucide-react";
 import { CheckoutPaymentButton } from "./CheckoutInput";
 import { useFormContext } from "react-hook-form";
@@ -8,7 +8,7 @@ export function CheckoutPaymentSelection() {
   const [buttonActive, setButtonActive] = useState<string>("");
 
   const {
-    register,
+    setValue,
     formState: { errors },
   } = useFormContext();
 
@@ -17,11 +17,12 @@ export function CheckoutPaymentSelection() {
     setPaymentValue(buttonName);
   }
 
-  console.log(errors);
-  console.log(paymentValue);
+  useEffect(() => {
+    setValue("pagamento", paymentValue);
+  }, [paymentValue, setValue]);
+
   return (
     <>
-      <input type="hidden" value={paymentValue} {...register("pagamento")} />
       <CheckoutPaymentButton
         name="Cartão de Crédito"
         active={buttonActive === "credito"}

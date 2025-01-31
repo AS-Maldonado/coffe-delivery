@@ -4,10 +4,11 @@ import { CheckoutProductExibition } from "./CheckoutProductExibition";
 import { useFormContext } from "react-hook-form";
 
 export function CheckoutProductCard() {
-  const { cart, changeQuantity } = useContext(CartContext);
+  const { cart, changeQuantity, removeProductFromCart } =
+    useContext(CartContext);
+  const { setValue } = useFormContext();
   const [allProductsPrice, setAllProductsPrice] = useState<number>(0);
 
-  const { setValue } = useFormContext();
   const totalPrice = allProductsPrice ? allProductsPrice + 3.5 : 0.0;
 
   useEffect(() => {
@@ -36,6 +37,7 @@ export function CheckoutProductCard() {
           <CheckoutProductExibition
             key={item.product.name}
             cartItem={item}
+            removeProductFromCart={removeProductFromCart}
             changeQuantity={changeQuantity}
           />
         ))}
