@@ -6,43 +6,44 @@ import { z } from "zod";
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "react-toastify";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
+import { CheckoutContext } from "../../contexts/CheckoutContext";
+import { Delivery } from "../../_types/Delivery";
+import { useNavigate } from "react-router-dom";
+
+const cartItenmSchema = z.object({
+  product: z.object({
+    image: z.string(),
+    category: z.string().optional(),
+    name: z.string(),
+    description: z.string().optional(),
+    price: z.number(),
+  }),
+  quantity: z.number(),
+});
+
+const checkoutFormSchema = z.object({
+  cep: z.string().min(8).max(8).nonempty("O CEP precisa ser preenchido."),
+  rua: z.string().nonempty("A rua precisa ser preenchida."),
+  numero: z.string().nonempty("O numero precisa ser preenchido."),
+  complemento: z.string().optional(),
+  bairro: z.string().nonempty("O bairro precisa ser preenchido."),
+  cidade: z.string().nonempty("A cidade precisa ser preenchida."),
+  uf: z.string().min(2).max(2).nonempty("O código UF precisa ser preenchido."),
+  pagamento: z.string().nonempty("Escolha uma forma de pagamento."),
+  precoItens: z
+    .number()
+    .min(1, "É necessário ter pelo menos um item no carrinho."),
+  precoTotal: z
+    .number()
+    .min(1, "É necessário ter pelo menos um item no carrinho."),
+  itens: z
+    .array(cartItenmSchema)
+    .nonempty("Deve haver pelo menos um item no carrinho."),
+});
 
 export function CheckoutForm() {
-  const cartItenmSchema = z.object({
-    product: z.object({
-      image: z.string(),
-      category: z.string().optional(),
-      name: z.string(),
-      description: z.string().optional(),
-      price: z.number(),
-    }),
-    quantity: z.number(),
-  });
-
-  const checkoutFormSchema = z.object({
-    cep: z.string().min(8).max(8).nonempty("O CEP precisa ser preenchido."),
-    rua: z.string().nonempty("A rua precisa ser preenchida."),
-    numero: z.string().nonempty("O numero precisa ser preenchido."),
-    complemento: z.string().optional(),
-    bairro: z.string().nonempty("O bairro precisa ser preenchido."),
-    cidade: z.string().nonempty("A cidade precisa ser preenchida."),
-    uf: z
-      .string()
-      .min(2)
-      .max(2)
-      .nonempty("O código UF precisa ser preenchido."),
-    pagamento: z.string().nonempty("Escolha uma forma de pagamento."),
-    precoItens: z
-      .number()
-      .min(1, "É necessário ter pelo menos um item no carrinho."),
-    precoTotal: z
-      .number()
-      .min(1, "É necessário ter pelo menos um item no carrinho."),
-    itens: z
-      .array(cartItenmSchema)
-      .nonempty("Deve haver pelo menos um item no carrinho."),
-  });
+  const navigate = useNavigate();
 
   type CheckoutFormData = z.infer<typeof checkoutFormSchema>;
 
@@ -51,6 +52,7 @@ export function CheckoutForm() {
   });
 
   const errors = methods.formState.errors;
+  const { addDelivery } = useContext(CheckoutContext);
 
   useEffect(() => {
     if (Object.keys(errors).length !== 0) {
@@ -61,8 +63,23 @@ export function CheckoutForm() {
   }, [errors]);
 
   const submit = (data: CheckoutFormData) => {
-    console.log("Dados enviados: ", data);
+    const delivery: Delivery = {
+      cep: data.cep,
+      rua: data.rua,
+      numero: data.numero,
+      complemento: data.complemento,
+      bairro: data.bairro,
+      cidade: data.cidade,
+      uf: data.uf,
+      pagamento: data.pagamento,
+      precoItens: data.precoItens,
+      precoTotal: data.precoTotal,
+      itens: data.itens,
+    };
+
+    addDelivery(delivery);
     toast.success("Pedido realizado com sucesso!");
+    navigate("/confirmed");
   };
 
   return (

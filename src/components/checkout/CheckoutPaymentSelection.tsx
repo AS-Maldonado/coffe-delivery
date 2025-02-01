@@ -25,22 +25,22 @@ export function CheckoutPaymentSelection() {
     <>
       <CheckoutPaymentButton
         name="Cartão de Crédito"
-        active={buttonActive === "credito"}
-        handleOnClick={() => handleOnClick("credito")}
+        active={buttonActive === "Cartão de Débito"}
+        handleOnClick={() => handleOnClick("Cartão de Débito")}
       >
         <CreditCard size={20} />
       </CheckoutPaymentButton>
       <CheckoutPaymentButton
         name="Cartão de Débito"
-        active={buttonActive === "debito"}
-        handleOnClick={() => handleOnClick("debito")}
+        active={buttonActive === "Cartão de Crédito"}
+        handleOnClick={() => handleOnClick("Cartão de Crédito")}
       >
         <Receipt size={20} />
       </CheckoutPaymentButton>
       <CheckoutPaymentButton
         name="Dinheiro"
-        active={buttonActive === "dinheiro"}
-        handleOnClick={() => handleOnClick("dinheiro")}
+        active={buttonActive === "Dinheiro"}
+        handleOnClick={() => handleOnClick("Dinheiro")}
       >
         <CircleDollarSign size={20} />
       </CheckoutPaymentButton>

@@ -3,9 +3,11 @@ import Logo from "../../assets/logo.svg";
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { CartContext } from "../../contexts/CartContext";
+import { CheckoutContext } from "../../contexts/CheckoutContext";
 
 export function Header() {
   const { cart } = useContext(CartContext);
+  const { delivery } = useContext(CheckoutContext);
 
   return (
     <header className="py-8">
@@ -18,7 +20,9 @@ export function Header() {
           <div className="flex items-center rounded-md bg-purple_light p-2">
             <MapPin className="mr-0.5 text-purple" />
             <h3 className="text-sm text-purple_dark sm:text-base">
-              Porto Alegre, RS
+              {delivery
+                ? delivery.cidade + ", " + delivery.uf
+                : "Porto Alegre, RS"}
             </h3>
           </div>
           <Link

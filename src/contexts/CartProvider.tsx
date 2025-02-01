@@ -3,11 +3,11 @@ import { toast } from "react-toastify";
 import { CartItem } from "../_types/CartItem";
 import { CartContext } from "./CartContext";
 
-interface CartContextProps {
+interface CartProviderProps {
   children: ReactNode;
 }
 
-export function CartContextProvider({ children }: CartContextProps) {
+export function CartContextProvider({ children }: CartProviderProps) {
   const [cart, setCart] = useState<CartItem[]>([]);
 
   function addToCart({ product, quantity }: CartItem) {
@@ -52,9 +52,19 @@ export function CartContextProvider({ children }: CartContextProps) {
     });
   }
 
+  function clearCart() {
+    setCart([]);
+  }
+
   return (
     <CartContext.Provider
-      value={{ cart, addToCart, changeQuantity, removeProductFromCart }}
+      value={{
+        cart,
+        addToCart,
+        changeQuantity,
+        removeProductFromCart,
+        clearCart,
+      }}
     >
       {children}
     </CartContext.Provider>
