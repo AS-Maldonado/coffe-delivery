@@ -55,7 +55,7 @@ export function CheckoutPaymentButton({
     <button
       type="button"
       onClick={handleOnClick}
-      className={`group flex items-center gap-2 whitespace-nowrap rounded-md p-4 text-xs uppercase hover:bg-purple hover:text-white ${active ? "bg-purple text-white" : "bg-button text-text"}`}
+      className={`group col-span-3 flex items-center gap-2 whitespace-nowrap rounded-md p-4 text-xs uppercase hover:bg-purple hover:text-white md:col-span-1 ${active ? "bg-purple text-white" : "bg-button text-text"}`}
     >
       <span
         className={`group-hover:text-white ${active ? "text-white" : "text-purple"}`}

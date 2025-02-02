@@ -85,10 +85,10 @@ export function CheckoutForm() {
   return (
     <FormProvider {...methods}>
       <form
-        className="mt-10 flex gap-8"
+        className="mt-10 flex flex-wrap justify-center gap-8 xl:flex-nowrap"
         onSubmit={methods.handleSubmit(submit)}
       >
-        <div className="w-[60%]">
+        <div className="w-full xl:w-[60%]">
           <h2 className="font-baloo text-xl font-extrabold text-subtitle">
             Complete seu pedido
           </h2>
@@ -97,17 +97,17 @@ export function CheckoutForm() {
             description="Informe o endereço onde deseja receber seu pedido"
             inputs={DUMMY_ADDRESS_INPUTS}
           >
-            <MapPin className="mr-2 text-yellow_dark" />
+            <MapPin size={30} className="mr-2 text-yellow_dark" />
           </CheckoutCard>
           <CheckoutCard
             title="Pagamento"
             description="O pagamento é feito na entrega. Escolha a forma que deseja pagar"
             payment
           >
-            <DollarSign className="text-purple" />
+            <DollarSign size={30} className="text-purple" />
           </CheckoutCard>
         </div>
-        <div className="w-[40%]">
+        <div className="w-full xl:w-[40%]">
           <h2 className="font-baloo text-xl font-extrabold text-subtitle">
             Complete seu pedido
           </h2>

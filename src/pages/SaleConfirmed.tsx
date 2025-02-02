@@ -20,7 +20,7 @@ export function SaleConfirmed() {
   const endereco = `${delivery?.rua}, ${delivery?.numero} ${delivery?.bairro} - ${delivery?.cidade}, ${delivery?.uf}`;
 
   return delivery ? (
-    <div className="mt-20 flex items-center justify-between">
+    <div className="mt-20 flex flex-wrap items-center justify-between gap-8 md:flex-nowrap md:gap-0">
       <div>
         <div className="mb-10">
           <h2 className="font-baloo text-3xl font-extrabold text-yellow_dark">

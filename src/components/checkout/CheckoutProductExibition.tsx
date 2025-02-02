@@ -13,7 +13,7 @@ export function CheckoutProductExibition({
   changeQuantity,
 }: CheckoutProcutExibitionProps) {
   return (
-    <div className="flex items-start justify-between border-b border-button py-6">
+    <div className="flex min-w-[320px] items-start justify-between border-b border-button py-6">
       <div className="flex items-center gap-5">
         <img
           src={cartItem.product.image}
